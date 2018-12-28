@@ -1,4 +1,3 @@
-
 def mostrar_bienvenida():
     print("Bienvenido a ... ")
     print("""
@@ -24,6 +23,16 @@ def obtener_estatura():
     centimetros = int( (estatura - metros)*100 )
     return (metros, centimetros)
 
+def obtener_sexo():
+    sexo = input("Por favor, ingresa tu sexo (M=Masculino, F=Femenino): ")
+    while sexo != 'M' and sexo != 'F':
+        sexo = input("Por favor, ingresa tu sexo (M=Masculino, F=Femenino): ")
+    return sexo
+
+def obtener_pais():
+    pais = input("Indica tu país de nacimiento: ")
+    return pais
+
 def obtener_num_amigos():
     amigos = int(input("Muy bien. Finalmente, cuéntame cuantos amigos tienes. "))
     return amigos
@@ -35,11 +44,13 @@ def obtener_datos():
     na = obtener_num_amigos()
     return (n,e,em,ec,na)
 
-def mostrar_perfil(nombre, edad, estatura_m, estatura_cm, num_amigos):
+def mostrar_perfil(nombre, edad, estatura_m, estatura_cm, sexo, pais, num_amigos):
     print("--------------------------------------------------")
     print("Nombre:   ", nombre)
     print("Edad:     ", edad, "años")
     print("Estatura: ", estatura_m, "m y ", estatura_cm, "centímetros")
+    print("Sexo:     ", sexo)
+    print("País:     ", pais)
     print("Amigos:   ", num_amigos)
     print("--------------------------------------------------")
 
@@ -68,3 +79,19 @@ def mostrar_mensaje(origen, destinatario, mensaje):
         print(origen, "dice:", "@"+destinatario, mensaje)
     print("--------------------------------------------------")
 
+def leer_perfil(nombre):
+	#Esto lo hacemos si ya había un usuario con ese nombre
+	print("Leyendo datos de usuario", nombre, "desde archivo.")
+	archivo_usuario = open(nombre+".user","r")
+	nombre = archivo_usuario.readline().rstrip()
+	edad = int(archivo_usuario.readline())
+	estatura = float(archivo_usuario.readline())
+	estatura_m = int(estatura)
+	estatura_cm = int( (estatura - estatura_m)*100 )
+	sexo = archivo_usuario.readline().rstrip()
+	pais = archivo_usuario.readline().rstrip()
+	num_amigos = int(archivo_usuario.readline())
+	estado = archivo_usuario.readline().rstrip()
+	#Una vez que hemos leido los datos del usuario no debemos olvidar cerrar el archivo
+	archivo_usuario.close()
+	return (nombre,edad,estatura,estatura_m,estatura_cm,sexo,pais,num_amigos,estado)
